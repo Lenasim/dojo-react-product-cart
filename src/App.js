@@ -36,11 +36,15 @@ const App = () => {
 
   const addProduct = (e) => {
     e.preventDefault();
-    const idList = productList.map(p =>(p.id))
+    const idList = productList.map(p => (p.id))
     const maxId = idList.reduce((prev, current) => (prev > current) ? prev : current)
-    setProductList ([...productList, {id: maxId + 1, name: newProductName, price: parseInt(newProductPrice), quantity: 1  } ])
-    setTotalPriceList(productList.map(product => product.price * product.quantity))
+    setProductList([...productList, { id: maxId + 1, name: newProductName, price: parseInt(newProductPrice), quantity: 1 }])
+
   }
+
+  useEffect(() =>
+    setTotalPriceList(productList.map(product => product.price * product.quantity)),
+    [productList])
 
   return (
     <div className='App'>
@@ -70,11 +74,11 @@ const App = () => {
         <h2>Ajouter un produit</h2>
         <div className="field">
           Nom
-          <input type="textarea" name="name" value={newProductName} onChange={(e)=>setNewProductName (e.target.value)}/>
+          <input type="textarea" name="name" value={newProductName} onChange={(e) => setNewProductName(e.target.value)} required/>
         </div>
         <div className="field">
           Prix
-          <input type="textarea" name="price" value={newProductPrice} onChange={(e)=> setNewProductPrice (e.target.value)}/>
+          <input type="number" name="price" value={newProductPrice} onChange={(e) => setNewProductPrice(e.target.value)} required/>
         </div>
         <input type="submit" value="Ajouter" />
       </form>
